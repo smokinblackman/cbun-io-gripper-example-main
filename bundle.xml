@@ -1,0 +1,104 @@
+<?document type="cbunxml" version="1.0" ?>
+<bundle name="WeissGripkit" version="1.1.0" path="libweiss_gripkit">
+    <label>Weiss Robotics GRIPKIT</label>
+    <author>Kassow Robots</author>
+    <description>Provides support for the Weiss Robotics GRIPKIT CR EASY device.</description>
+    <class name="kswx_weiss_gripkit::GripkitCrEasy"
+        base="kr2_bundle_api::CustomDevice"
+        instance_prefix="GK_EASY">
+        <label>GRIPKIT CR EASY</label>
+        <description>Provides support for the Weiss Robotics GRIPKIT CR EASY device.</description>
+        <include>weiss_gripkit/gripkit_cr_easy.h</include>
+        <dashboard class="com.kassowrobots.weissroboticsgripkit.DashboardFragment"/>
+        <config>
+            <param name="robot_gen" type="int">
+                <label>Robot Generation</label>
+                <range>
+                    <item name="Generation 1">1</item>
+                    <item name="Generation 2">2</item>
+                </range>
+                <default>2</default>
+            </param>
+        </config>
+        <mounting>
+            <param name="toolload" type="const Load">
+                <label>Tool Inertia</label>
+                <default>
+                    <Load>
+                        <Mass>0.83</Mass>
+                        <CenterOfGravity>
+                            <X>0.000</X>
+                            <Y>0.000</Y>
+                            <Z>0.032</Z>
+                        </CenterOfGravity>
+                        <InertiaMatrix>
+                            <XX>0.001</XX>
+                            <YY>0.001</YY>
+                            <ZZ>0.001</ZZ>
+                            <XY>0.000</XY>
+                            <XZ>0.000</XZ>
+                            <YZ>0.000</YZ>
+                        </InertiaMatrix>
+                    </Load>
+                </default>
+            </param>
+        </mounting>
+        <method name="grip" xmlrpc="true" timeout="5.0">
+            <label>Grip</label>
+            <description>Move to the predefined grip (no part limit) position. Optionally set "Payload" as payload Load if gripper detects a part (no part limit not reached), otherwise clear payload Load. Load set in relation to the tool flange.</description>
+            <param name="blocking" type="bool">
+                <label>Blocking</label>
+                <default>true</default>
+            </param>
+            <param name="payload" type="Load" optional="true">
+                <label>Payload</label>
+                <type_label>Load REF</type_label>
+            </param>
+        </method>
+        <method name="release" xmlrpc="true" timeout="5.0">
+            <label>Release</label>
+            <description>Move to the predefined release position. Clear payload Load.</description>
+            <param name="blocking" type="bool">
+                <label>Blocking</label>
+                <default>true</default>
+            </param>
+        </method>
+        <function name="isReleased">
+            <label>isReleased</label>
+            <description>Return 1 if the gripper is in the release state, 0 otherwise.</description>
+            <retval name="released" type="Number">
+                <label>Released</label>
+            </retval>
+        </function>
+        <function name="isHolding">
+            <label>isHolding</label>
+            <description>Return 1 if the gripper is in the grip state and workpiece is detected ("no part limit" not reached), 0 otherwise.</description>
+            <retval name="holding" type="Number">
+                <label>Holding</label>
+            </retval>
+        </function>
+        <function name="isNoPart">
+            <label>isReleased</label>
+            <description>Return 1 if the gripper is in the grip state and workpiece is not detected ("no part limit" reached), 0 otherwise.</description>
+            <retval name="no_part" type="Number">
+                <label>No part detected</label>
+            </retval>
+        </function>
+        <function name="isError">
+            <label>isError</label>
+            <description>Returns 1 if the gripper is deactivated or an error is present, 0 otherwise.</description>
+            <retval name="error" type="Number">
+                <label>Error</label>
+            </retval>
+        </function>
+    </class>
+    <application
+        package="com.kassowrobots.weissroboticsgripkit"
+        label="Weiss Robotics CR Easy Dashboard"
+        apk="/weiss_robotics_gripkit.apk">
+        <fragment 
+            name=".DashboardFragment"
+            icon="ic_cbun_weiss.png">
+        </fragment>
+    </application>
+</bundle>

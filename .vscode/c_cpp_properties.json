@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "/opt/kr2/include",
+                "${default}",
+                "${workspaceFolder}/backend/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc-8",
+            "cStandard": "${default}",
+            "cppStandard": "${default}",
+            "intelliSenseMode": "${default}"
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "type": "cmake",
+        "label": "CBun: Build",
+        "command": "cleanRebuild",
+        "targets": [
+          "all"
+        ],
+        "group": "build",
+        "problemMatcher": [],
+        "detail": "Builds CBun (cmake)",
+        "dependsOn": "CMake: configure",
+        "dependsOrder": "sequence"
+      },
+      {
+        "type": "cmake",
+        "label": "CBun: Build and Install",
+        "command": "install",
+        "targets": [
+          "all"
+        ],
+        "group": "build",
+        "problemMatcher": [],
+        "detail": "Builds and installs CBun (cmake)",
+        "dependsOn": "CBun: Build",
+        "dependsOrder": "sequence"
+      },
+      {
+        "type": "shell",
+        "label": "Deploy CBun",
+        "command": "./deploy.sh",
+        "group": "build",
+        "dependsOn": "CBun: Build",
+        "dependsOrder": "sequence"
+      }
+    ]
+}
